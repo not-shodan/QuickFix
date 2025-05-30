@@ -1,1 +1,20 @@
+Basic troubleshooting when using Virtualbox on Ubuntu 25
 
+sudo apt-get install binutils build-essential dkms linux-headers-$(uname -r) make
+
+# auto fix dependencies
+sudo apt install -f
+
+# disable KVM
+sudo rmmod kvm_intel
+sudo rmmod kvm
+
+
+# blacklist modules
+echo "blacklist kvm" | sudo tee /etc/modprobe.d/blacklist-kvm.conf
+echo "blacklist kvm_intel" | sudo tee -a /etc/modprobe.d/blacklist-kvm.conf
+
+
+# update and reboot
+sudo update-initramfs -u
+sudo reboot
